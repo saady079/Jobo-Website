@@ -1,4 +1,6 @@
 import {
+    sortingBtnRelevantEl,
+    sortingBtnRecentEl,
     jobListSearchEl,
     searchInputEl,
     spinnerSearchEl,
@@ -12,6 +14,7 @@ import {
 import renderError from './Error.js';
 import renderSpinner from './Spinner.js';
 import renderJobList from './JobList.js';
+import renderPageBtns from './pagination.js';
 
 // -- CONTROLLING SEARCH.BOX
 const submitHandler = async event => {
@@ -27,6 +30,10 @@ const submitHandler = async event => {
         return;
     }
 
+    // Reset sorting buttons:  
+    sortingBtnRelevantEl.classList.add('sorting__button--active');
+    sortingBtnRecentEl.classList.remove('sorting__button--active');
+
     searchInputEl.blur();
     renderSpinner('search');
 
@@ -35,14 +42,15 @@ const submitHandler = async event => {
         renderSpinner('search');
 
         const { jobItems } = data;
-        state.searchJobItems= jobItems;               
-
+        state.searchJobItems = jobItems;
         numberEl.textContent = jobItems.length;
         renderJobList();
 
+        state.currentPage = 1;
+        renderPageBtns();
     } catch (error) {
         renderSpinner('search');
-        renderError();        
+        renderError();
     }
 }
 

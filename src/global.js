@@ -1,6 +1,7 @@
 // -> CONSTANTS
 export const Base_Api = 'https://bytegrad.com/course-assets/js/2/api';
 export const Display_Time = 5000;
+export const pageSize_items = 7;
 
 // -> SELECTORS
 export const bookmarksBtnEl = document.querySelector('.bookmarks-btn');
@@ -38,5 +39,6 @@ export const getData = async Url => {
 
 // -> STATE
 export const state = {
-    searchJobItems: []
+    searchJobItems: [],
+    currentPage: 1
 }

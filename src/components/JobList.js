@@ -1,4 +1,5 @@
 import {
+    pageSize_items,
     jobDetailsContentEl,
     spinnerJobDetailsEl,
     jobListSearchEl,
@@ -13,7 +14,7 @@ import renderError from './Error.js';
 
 const renderJobList = () => {
     jobListSearchEl.innerHTML = '';
-    state.searchJobItems.slice(0, 7).forEach(jobItem => {
+    state.searchJobItems.slice(state.currentPage*pageSize_items-pageSize_items, state.currentPage*pageSize_items).forEach(jobItem => {
         const jobItemHtml = `
             <li class="job-item">
                 <a class="job-item__link" href="${jobItem.id}">
