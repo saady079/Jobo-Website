@@ -52,6 +52,8 @@ const jobItemHandler = async event => {
     renderSpinner('jobList');
     const jobId = jobItemEl.children[0].getAttribute('href');
 
+    history.pushState(null,'',`/joboWeb.html#${jobId}`);
+    
     try {
         const data = await getData(`${Base_Api}/jobs/${jobId}`);
         renderSpinner('jobList');

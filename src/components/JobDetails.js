@@ -3,6 +3,7 @@ import {
 } from '../global.js';
 
 const renderJobDetail = jobItem => {
+    jobDetailsContentEl.innerHTML='';
     const detail = `
                 <img src="${jobItem.coverImgURL}" alt="#" class="job-details__cover-img">
                     <a class="apply-btn" href="${jobItem.companyURL}" target="_blank">Apply <i class="fa-solid fa-square-arrow-up-right apply-btn__icon"></i></a>
