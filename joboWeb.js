@@ -5,4 +5,4 @@ import './src/components/Spinner.js';
 import './src/components/JobDetails.js';
 import './src/components/Sorting.js';
 import './src/components/pagination.js';
-import './src/components/Router.js';
+import './src/components/Router.js'; 
