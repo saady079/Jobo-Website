@@ -14,9 +14,9 @@ import renderError from './Error.js';
 
 const renderJobList = () => {
     jobListSearchEl.innerHTML = '';
-    state.searchJobItems.slice(state.currentPage*pageSize_items-pageSize_items, state.currentPage*pageSize_items).forEach(jobItem => {
+    state.searchJobItems.slice(state.currentPage * pageSize_items - pageSize_items, state.currentPage * pageSize_items).forEach(jobItem => {
         const jobItemHtml = `
-            <li class="job-item">
+            <li class="job-item ${state.activeJobItem.id === jobItem.id && 'job-item--active'}">
                 <a class="job-item__link" href="${jobItem.id}">
                     <div class="job-item__badge">${jobItem.badgeLetters}</div>
                     <div class="job-item__middle">
@@ -52,8 +52,9 @@ const jobItemHandler = async event => {
     renderSpinner('jobList');
     const jobId = jobItemEl.children[0].getAttribute('href');
 
-    history.pushState(null,'',`/joboWeb.html#${jobId}`);
-    
+    state.activeJobItem = state.searchJobItems.find(item => item.id == jobId);
+    history.pushState(null, '', `/joboWeb.html#${jobId}`);
+
     try {
         const data = await getData(`${Base_Api}/jobs/${jobId}`);
         renderSpinner('jobList');

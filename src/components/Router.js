@@ -1,5 +1,6 @@
 import {
     jobDetailsContentEl,
+    check_Refresh_Redirect,
     Base_Api,
     getData,
     state,
@@ -19,12 +20,12 @@ const loaderHandler = async () => {
             const data = await getData(`${Base_Api}/jobs/${id}`);
             renderSpinner('jobDetail');
 
-            const { jobItem: info } = data;
+            const { jobItem:info } = data;
+            state.activeJobItem = info;
             renderJobDetail(info);
 
-        } catch (error) {
-            renderError();
-        }
+        } catch (error) { renderError(); }
+        check_Refresh_Redirect();
     }
 }
 

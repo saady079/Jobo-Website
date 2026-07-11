@@ -25,12 +25,28 @@ export const sortingBtnRecentEl = document.querySelector(".sorting__button--rece
 export const spinnerSearchEl = document.querySelector(".spinner--search");
 export const spinnerJobDetailsEl = document.querySelector(".spinner--job-details");
 
+// -> HOME
+export const check_Refresh_Redirect = () => {
+    // Getting information on how to load the page:
+    const navigationEntries = performance.getEntriesByType("navigation");
+
+    if (navigationEntries.length > 0) {
+        const navigationType = navigationEntries[0].type;
+        const targetUrl = "http://127.0.0.1:5501/joboWeb.html";
+
+        // Set page address as default:
+        if (navigationType === "reload" && window.location.href !== targetUrl) {
+            window.location.href = targetUrl;
+        }
+    }
+}
+
 // -> UTILITY FUNCTION
 export const getData = async Url => {
     const response = await fetch(Url);
     const data = await response.json();
 
-    // 4xx 5xx 
+    // 4xx 5xx: 
     if (!response.ok) {
         throw new Error(data.description);
     }
@@ -40,5 +56,6 @@ export const getData = async Url => {
 // -> STATE
 export const state = {
     searchJobItems: [],
-    currentPage: 1
+    currentPage: 1,
+    activeJobItem: {}
 }
