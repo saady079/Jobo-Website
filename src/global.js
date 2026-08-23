@@ -57,5 +57,6 @@ export const getData = async Url => {
 export const state = {
     searchJobItems: [],
     currentPage: 1,
-    activeJobItem: {}
+    activeJobItem: {},
+    bookmarkJobItems: []
 }

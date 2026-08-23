@@ -5,16 +5,28 @@ import {
     jobListSearchEl,
     Base_Api,
     getData,
-    state
+    state,
+    jobListBookmarksEl
 } from '../global.js';
 
 import renderSpinner from './Spinner.js';
 import renderJobDetail from './JobDetails.js';
 import renderError from './Error.js';
 
-const renderJobList = () => {
+const renderJobList = (whichJobList = 'search') => {
+    const jobListEl = whichJobList === 'search' ? jobListSearchEl : jobListBookmarksEl;
     jobListSearchEl.innerHTML = '';
-    state.searchJobItems.slice(state.currentPage * pageSize_items - pageSize_items, state.currentPage * pageSize_items).forEach(jobItem => {
+
+    let jobItems;
+
+    if (whichJobList === 'search') {
+        jobItems = state.searchJobItems.slice(state.currentPage * pageSize_items - pageSize_items, state.currentPage * pageSize_items)
+    }
+    else {
+        jobItems = state.bookmarkJobItems;
+    }
+
+    jobItems.forEach(jobItem => {
         const jobItemHtml = `
             <li class="job-item ${state.activeJobItem.id === jobItem.id && 'job-item--active'}">
                 <a class="job-item__link" href="${jobItem.id}">
@@ -29,7 +41,7 @@ const renderJobList = () => {
                         </div>
                     </div>
                     <div class="job-item__right">
-                        <i class="fa-solid fa-bookmark job-item__bookmark-icon"></i>
+                        <i class="fa-solid fa-bookmark job-item__bookmark-icon ${state.bookmarkJobItems.some(b => b.id === jobItem.id) && 'job-item__bookmark-icon--bookmarked'}"></i>
                         <time class="job-item__time">${jobItem.daysAgo}d</time>
                     </div>
                 </a>
@@ -50,9 +62,12 @@ const jobItemHandler = async event => {
 
     jobDetailsContentEl.innerHTML = '';
     renderSpinner('jobList');
+    
     const jobId = jobItemEl.children[0].getAttribute('href');
 
-    state.activeJobItem = state.searchJobItems.find(item => item.id == jobId);
+    const allJobItems = [...state.searchJobItems, ...state.bookmarkJobItems];
+    state.activeJobItem = allJobItems.find(item => item.id == jobId);
+
     history.pushState(null, '', `/joboWeb.html#${jobId}`);
 
     try {
@@ -69,5 +84,6 @@ const jobItemHandler = async event => {
 }
 
 jobListSearchEl.addEventListener('click', jobItemHandler);
+jobListBookmarksEl.addEventListener('click', jobItemHandler);
 
 export default renderJobList;
