@@ -14,17 +14,15 @@ import renderJobDetail from './JobDetails.js';
 import renderError from './Error.js';
 
 const renderJobList = (whichJobList = 'search') => {
+    
     const jobListEl = whichJobList === 'search' ? jobListSearchEl : jobListBookmarksEl;
-    jobListSearchEl.innerHTML = '';
+    jobListEl.innerHTML = '';
 
     let jobItems;
 
-    if (whichJobList === 'search') {
-        jobItems = state.searchJobItems.slice(state.currentPage * pageSize_items - pageSize_items, state.currentPage * pageSize_items)
-    }
-    else {
-        jobItems = state.bookmarkJobItems;
-    }
+    whichJobList === 'search' ?
+        jobItems = state.searchJobItems.slice(state.currentPage * pageSize_items - pageSize_items, state.currentPage * pageSize_items) :
+        jobItems = state.bookmarkJobItems;        
 
     jobItems.forEach(jobItem => {
         const jobItemHtml = `
@@ -46,7 +44,7 @@ const renderJobList = (whichJobList = 'search') => {
                     </div>
                 </a>
             </li>`;
-        jobListSearchEl.insertAdjacentHTML('beforeend', jobItemHtml);
+        jobListEl.insertAdjacentHTML('beforeend', jobItemHtml);
     });
 }
 
@@ -62,7 +60,7 @@ const jobItemHandler = async event => {
 
     jobDetailsContentEl.innerHTML = '';
     renderSpinner('jobList');
-    
+
     const jobId = jobItemEl.children[0].getAttribute('href');
 
     const allJobItems = [...state.searchJobItems, ...state.bookmarkJobItems];
