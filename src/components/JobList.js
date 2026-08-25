@@ -14,7 +14,7 @@ import renderJobDetail from './JobDetails.js';
 import renderError from './Error.js';
 
 const renderJobList = (whichJobList = 'search') => {
-    
+
     const jobListEl = whichJobList === 'search' ? jobListSearchEl : jobListBookmarksEl;
     jobListEl.innerHTML = '';
 
@@ -22,7 +22,7 @@ const renderJobList = (whichJobList = 'search') => {
 
     whichJobList === 'search' ?
         jobItems = state.searchJobItems.slice(state.currentPage * pageSize_items - pageSize_items, state.currentPage * pageSize_items) :
-        jobItems = state.bookmarkJobItems;        
+        jobItems = state.bookmarkJobItems;
 
     jobItems.forEach(jobItem => {
         const jobItemHtml = `
@@ -55,8 +55,8 @@ const jobItemHandler = async event => {
     const jobItemEl = eventCase.closest('.job-item');
 
     // Activate job items in this event:
-    document.querySelector('.job-item--active')?.classList.remove('job-item--active');
-    jobItemEl.classList.add('job-item--active');
+    document.querySelectorAll('.job-item--active').forEach(item => item.classList.remove('job-item--active'));
+    jobItemEl.classList.add('job-item--active');   
 
     jobDetailsContentEl.innerHTML = '';
     renderSpinner('jobList');

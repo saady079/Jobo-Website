@@ -14,8 +14,8 @@ const clickHandler = event => {
         state.bookmarkJobItems = state.bookmarkJobItems.filter(b => b.id !== state.activeJobItem.id);        
     }
     else {
-        state.bookmarkJobItems.push(state.activeJobItem);        
-    }    
+        state.bookmarkJobItems.push(state.activeJobItem);
+    } 
 
     //Local Storage
     localStorage.setItem("bookmarkJobItems",JSON.stringify(state.bookmarkJobItems));
@@ -27,7 +27,7 @@ const clickHandler = event => {
 
 const mouseEnterHandler = () => {
     bookmarksBtnEl.classList.add('bookmarks-btn--active');
-    jobListBookmarksEl.classList.add('job-list--visible');    
+    jobListBookmarksEl.classList.add('job-list--visible');
     renderJobList('bookmarks');
 };
 
